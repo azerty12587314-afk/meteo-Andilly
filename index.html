@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔬 Météo Lab - Expert Edition</title>
-    <!-- Chargement de Tailwind CSS v4 et Chart.js -->
+    <title>🔬 Météo Lab - Andilly (17)</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -21,7 +20,6 @@
 
     <div class="max-w-6xl mx-auto space-y-6">
         
-        <!-- En-tête -->
         <header class="text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
             <div>
                 <h1 class="text-3xl font-extrabold text-blue-400 tracking-tight">🔬 Météo Lab</h1>
@@ -32,14 +30,13 @@
             </button>
         </header>
 
-        <!-- BARRE DE RECHERCHE DE VILLE DYNAMIQUE -->
         <section class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex flex-col sm:flex-row gap-3 items-center justify-between">
             <div class="w-full sm:w-auto flex items-center gap-2">
                 <span class="text-sm font-bold text-slate-400">📍 Lieu actuel :</span>
                 <span id="nom-lieu-actif" class="text-sm font-extrabold text-amber-400 bg-slate-900 px-3 py-1 rounded-lg border border-slate-700">Chargement...</span>
             </div>
             <div class="w-full sm:w-96 flex gap-2">
-                <input type="text" id="input-recherche" placeholder="Rechercher une ville (ex: Niort, Paris...)" 
+                <input type="text" id="input-recherche" placeholder="Rechercher une autre ville (ex: Niort, Paris...)" 
                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500"
                        onkeypress="if(event.key === 'Enter') rechercherVille()">
                 <button onclick="rechercherVille()" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-sm font-bold transition-all cursor-pointer">
@@ -48,40 +45,33 @@
             </div>
         </section>
 
-        <!-- AGENCEMENT HAUT : ÉVOLUTION DU CIEL & COURBE AROME -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            <!-- Colonne Gauche : Carrés 2x2 + Nouveau Bloc 3 Jours -->
             <div class="space-y-6 flex flex-col justify-between">
-                <!-- Bloc Évolution du ciel en Carré 2x2 -->
                 <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl flex-1 flex flex-col justify-between">
                     <div>
                         <h3 class="text-lg font-bold text-emerald-400 mb-1">📅 Évolution du ciel aujourd'hui</h3>
                         <p class="text-xs text-slate-400 mb-4">Aperçu par tranches horaires locales (AROME - 1.3km).</p>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-center my-auto">
-                        <!-- Matin -->
                         <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex flex-col justify-center items-center min-h-[120px]">
                             <span class="text-xs font-semibold text-slate-400">MATIN (08h)</span>
                             <div id="icone-matin" class="text-4xl my-1 weather-pulse">⏳</div>
                             <span id="desc-matin" class="text-[10px] text-slate-400 block h-4 mb-1 animate-pulse bg-slate-700 w-16 rounded mx-auto"></span>
                             <span id="temp-matin" class="text-sm font-bold animate-pulse bg-slate-700 w-12 h-4 rounded block mx-auto mt-1"></span>
                         </div>
-                        <!-- Midi -->
                         <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex flex-col justify-center items-center min-h-[120px]">
                             <span class="text-xs font-semibold text-slate-400">MIDI (12h)</span>
                             <div id="icone-midi" class="text-4xl my-1 weather-pulse">⏳</div>
                             <span id="desc-midi" class="text-[10px] text-slate-400 block h-4 mb-1 animate-pulse bg-slate-700 w-16 rounded mx-auto"></span>
                             <span id="temp-midi" class="text-sm font-bold animate-pulse bg-slate-700 w-12 h-4 rounded block mx-auto mt-1"></span>
                         </div>
-                        <!-- Après-midi -->
                         <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex flex-col justify-center items-center min-h-[120px]">
                             <span class="text-xs font-semibold text-slate-400">APRÈS-MIDI (16h)</span>
                             <div id="icone-aprem" class="text-4xl my-1 weather-pulse">⏳</div>
                             <span id="desc-aprem" class="text-[10px] text-slate-400 block h-4 mb-1 animate-pulse bg-slate-700 w-16 rounded mx-auto"></span>
                             <span id="temp-aprem" class="text-sm font-bold animate-pulse bg-slate-700 w-12 h-4 rounded block mx-auto mt-1"></span>
                         </div>
-                        <!-- Soir -->
                         <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex flex-col justify-center items-center min-h-[120px]">
                             <span class="text-xs font-semibold text-slate-400">SOIR (20h)</span>
                             <div id="icone-soir" class="text-4xl my-1 weather-pulse">⏳</div>
@@ -91,7 +81,6 @@
                     </div>
                 </section>
 
-                <!-- Bloc prévisions sur 3 Jours avec animations -->
                 <section class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl">
                     <h3 class="text-md font-bold text-cyan-400 mb-3">🔮 Tendances globales sur 3 Jours</h3>
                     <div class="grid grid-cols-3 gap-3 text-center">
@@ -114,12 +103,10 @@
                 </section>
             </div>
 
-            <!-- Bloc Courbe Arome (Maille Fine 48h) avec Sélecteur de type de donnée -->
             <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl lg:h-full flex flex-col justify-between">
                 <div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
                         <h3 class="text-lg font-bold text-amber-400">🎯 Maille Fine Haute Résolution (48h)</h3>
-                        <!-- Onglets Données Arome -->
                         <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-700 text-xs">
                             <button onclick="changerTypeDonneeArome('temp')" id="tab-arome-temp" class="px-2 py-1 rounded bg-amber-500 font-bold text-slate-900 transition-all cursor-pointer">🌡️ Temp</button>
                             <button onclick="changerTypeDonneeArome('pluie')" id="tab-arome-pluie" class="px-2 py-1 rounded text-slate-400 transition-all cursor-pointer">🌧️ Pluie</button>
@@ -134,7 +121,6 @@
             </section>
         </div>
 
-        <!-- FILTRE INTERACTIF POUR LE GRAPHIQUE 5 JOURS -->
         <section class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex flex-wrap gap-3 items-center">
             <span class="text-sm font-bold text-slate-400 mr-2">Filtre du graphique macro :</span>
             <div onclick="toggleModelDataset(0)" id="btn-0" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold border border-cyan-500 bg-cyan-500/20 text-cyan-300 transition-all cursor-pointer select-none">
@@ -151,14 +137,12 @@
             </div>
         </section>
 
-        <!-- GRAND GRAPHIQUE COMPARE SUR 5 JOURS (PLEINE LARGEUR) -->
         <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
                 <div>
                     <h3 class="text-lg font-bold text-blue-400">📈 Tendances Comparées (0 à 5 Jours)</h3>
                     <p class="text-xs text-slate-400">Superposition multi-modèles mondiaux et européens pour isoler les incertitudes.</p>
                 </div>
-                <!-- Onglets Données Macro -->
                 <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-700 text-xs">
                     <button onclick="changerTypeDonneePrincipal('temp')" id="tab-macro-temp" class="px-2 py-1 rounded bg-blue-500 font-bold text-slate-900 transition-all cursor-pointer">🌡️ Temp</button>
                     <button onclick="changerTypeDonneePrincipal('pluie')" id="tab-macro-pluie" class="px-2 py-1 rounded text-slate-400 transition-all cursor-pointer">🌧️ Pluie</button>
@@ -170,7 +154,6 @@
             </div>
         </section>
 
-        <!-- GRAPHIQUE DE TENDANCE LONG TERME : SEULEMENT LA SUITE (5 À 10 JOURS) -->
         <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
             <h3 class="text-lg font-bold text-indigo-400 mb-1">🔮 Suite Long Terme : Uniquement ECMWF IFS (5 à 10 Jours)</h3>
             <p class="text-xs text-slate-400 mb-4">Vue exclusive sur la fin de l'échéance via le modèle de référence européen.</p>
@@ -179,7 +162,6 @@
             </div>
         </section>
 
-        <!-- SECTION CARTE INTERACTIVE VENTUSKY INTÉGRALE -->
         <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl space-y-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold text-emerald-400">💨 Flux dynamique & Cartographie interactive (Ventusky)</h2>
@@ -192,26 +174,23 @@
 
     </div>
 
-    <!-- SCRIPT PRINCIPAL OPTIMISÉ AVEC ONGLET MULTI-DONNÉES -->
     <script>
-        // ==========================================
-        // CONFIGURATION DU SITE POUR CE REPO
-        // ==========================================
-        const CONFIG_VILLE = "Andilly 17";
-        // ==========================================
+        // ===================================================
+        // CONFIGURATION EN DUR : ANDILLY (CHARENTE-MARITIME)
+        // ===================================================
+        const NOM_VILLE_FIXE = "Andilly (17)";
+        let currentLat = "46.2531"; 
+        let currentLon = "-0.1739";
+        // ===================================================
 
-        let currentLat = "";
-        let currentLon = "";
-        
         let chartPrincipal = null;
         let chartArome = null;
         let chart10Jours = null;
         
         let statusModeles = [true, true, true, true]; 
-        let typeDonneePrincipal = 'temp'; // 'temp', 'pluie', 'vent'
-        let typeDonneeArome = 'temp'; // 'temp', 'pluie', 'vent'
+        let typeDonneePrincipal = 'temp'; 
+        let typeDonneeArome = 'temp'; 
 
-        // Base de stockage globale des données reçues des API
         let baseDonneesRaw = {}; 
 
         let donneesMeteo = { 
@@ -241,66 +220,54 @@
             document.getElementById('iframe-ventusky').src = `https://www.ventusky.com/?p=${currentLat};${currentLon};10&l=wind`;
         }
 
-        async function chercherCoordonneesVille(nomVille) {
+        // Recherche manuelle via le champ de recherche
+        async function rechercherVille() {
+            const saisie = document.getElementById('input-recherche').value.trim();
+            if (!saisie) return;
+            
+            activerSkeletons();
+            
             try {
-                // On nettoie la saisie
-                let recherche = nomVille.trim();
+                let recherche = saisie;
                 let filtreDepartement = "";
-
-                // Extraction magique : si on trouve 2 chiffres (ex: 17, 75, 33)
                 const matchDep = recherche.match(/\b(\d{2})\d*\b/);
                 if (matchDep) {
-                    filtreDepartement = matchDep[1]; // On stocke le département (ex: "17")
-                    recherche = recherche.replace(/\b\d+\b/, "").trim(); // On l'enlève du nom de la ville
+                    filtreDepartement = matchDep[1];
+                    recherche = recherche.replace(/\b\d+\b/, "").trim();
                 }
 
-                // URL de base forcée sur la France
                 let urlGeocode = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(recherche)}&count=10&language=fr&country_code=fr&format=json`;
-                
                 const res = await fetch(urlGeocode);
                 const data = await res.json();
 
                 if (data.results && data.results.length > 0) {
-                    let villeSelectionnee = data.results[0]; // Par défaut, la première
+                    let villeSelectionnee = data.results[0];
 
-                    // Si on avait un département en filtre, on cherche dans les 10 résultats celui qui correspond
                     if (filtreDepartement) {
                         const correspondance = data.results.find(v => 
                             (v.postcodes && v.postcodes.some(p => p.startsWith(filtreDepartement))) || 
                             (v.admin2 && v.admin2.includes(filtreDepartement))
                         );
-                        if (correspondance) {
-                            villeSelectionnee = correspondance;
-                        }
+                        if (correspondance) villeSelectionnee = correspondance;
                     }
 
-                    // Application des coordonnées trouvées
                     currentLat = villeSelectionnee.latitude.toFixed(4);
                     currentLon = villeSelectionnee.longitude.toFixed(4);
                     
-                    // Affichage propre (Ex: Andilly, Nouvelle-Aquitaine)
                     const regionInfo = villeSelectionnee.admin1 ? `, ${villeSelectionnee.admin1}` : '';
                     document.getElementById('nom-lieu-actif').innerText = `${villeSelectionnee.name}${regionInfo}`;
-                    return true;
+                    
+                    document.getElementById('input-recherche').value = "";
+                    chargerToutesLesDonnees();
+                } else {
+                    alert("Ville non trouvée, retour aux données d'Andilly.");
+                    document.getElementById('nom-lieu-actif').innerText = NOM_VILLE_FIXE;
+                    currentLat = "46.2531";
+                    currentLon = "-0.1739";
+                    chargerToutesLesDonnees();
                 }
             } catch (err) {
                 console.error("Erreur géocodage :", err);
-            }
-            return false;
-        }
-        }
-
-        async function rechercherVille() {
-            const saisie = document.getElementById('input-recherche').value.trim();
-            if (!saisie) return;
-            activerSkeletons();
-            const trouve = await chercherCoordonneesVille(saisie);
-            if (trouve) {
-                document.getElementById('input-recherche').value = "";
-                chargerToutesLesDonnees();
-            } else {
-                alert("Ville non trouvée en France, réessaye !");
-                desactiverSkeletonsAucuneDonnee();
             }
         }
 
@@ -325,7 +292,6 @@
             try {
                 actualiserCarteVentusky();
 
-                // Acquisition Multi-modèles élargie avec précipitations et rafales
                 const [dataArpege, dataIcon, dataGfs, dataEC10J] = await Promise.all([
                     fetchModelData('meteofrance_arpege_europe', 5),
                     fetchModelData('icon_seamless', 5),
@@ -341,7 +307,6 @@
                 donneesMeteo.labels5J = dataArpege.hourly.time.map(t => new Date(t).toLocaleString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit'}));
                 donneesMeteo.labelsSuite10J = dataEC10J.hourly.time.slice(120, 240).map(t => new Date(t).toLocaleString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit'}));
 
-                // Remplissage du bloc 3 Jours (Index 12h, 36h, 60h)
                 [12, 36, 60].forEach((idx, i) => {
                     let code = dataEC10J.hourly.weather_code[idx];
                     let info = obtenirInfosMeteo(code);
@@ -350,7 +315,6 @@
                     document.getElementById(`p3j-txt-${i}`).innerText = info.txt;
                 });
 
-                // Acquisition Maille Fine (AROME)
                 let dataArome = null;
                 try {
                     dataArome = await fetchModelData('meteofrance_arome_france_hd', 2, ",weather_code");
@@ -371,24 +335,21 @@
                     reinitialiserIntervallesHorsZone();
                 }
 
-                // Construction initiale des graphiques
                 construireGraphiquePrincipal();
                 construireGraphiqueArome();
                 construireGraphiqueSuite10Jours();
 
             } catch (erreur) {
-                console.error("Erreur d'acquisition générale :", erreur);
+                console.error("Erreur générale :", erreur);
                 reinitialiserIntervallesHorsZone();
             }
         }
 
         function calculerIntervallesJournee(hourly) {
             const moments = { matin: 8, midi: 12, aprem: 16, soir: 20 };
-            
             for (let m in moments) {
                 let idx = moments[m];
                 let info = obtenirInfosMeteo(hourly.weather_code[idx]);
-                
                 document.getElementById(`icone-${m}`).innerText = info.img;
                 
                 let descEl = document.getElementById(`desc-${m}`);
@@ -411,16 +372,11 @@
             });
         }
 
-        // --- GESTION DES ONGLETS DE DONNÉES ---
         function changerTypeDonneePrincipal(type) {
             typeDonneePrincipal = type;
             ['temp', 'pluie', 'vent'].forEach(t => {
                 let btn = document.getElementById(`tab-macro-${t}`);
-                if(t === type) {
-                    btn.className = "px-2 py-1 rounded bg-blue-500 font-bold text-slate-900 cursor-pointer";
-                } else {
-                    btn.className = "px-2 py-1 rounded text-slate-400 cursor-pointer";
-                }
+                btn.className = (t === type) ? "px-2 py-1 rounded bg-blue-500 font-bold text-slate-900 cursor-pointer" : "px-2 py-1 rounded text-slate-400 cursor-pointer";
             });
             construireGraphiquePrincipal();
         }
@@ -429,11 +385,7 @@
             typeDonneeArome = type;
             ['temp', 'pluie', 'vent'].forEach(t => {
                 let btn = document.getElementById(`tab-arome-${t}`);
-                if(t === type) {
-                    btn.className = "px-2 py-1 rounded bg-amber-500 font-bold text-slate-900 cursor-pointer";
-                } else {
-                    btn.className = "px-2 py-1 rounded text-slate-400 cursor-pointer";
-                }
+                btn.className = (t === type) ? "px-2 py-1 rounded bg-amber-500 font-bold text-slate-900 cursor-pointer" : "px-2 py-1 rounded text-slate-400 cursor-pointer";
             });
             construireGraphiqueArome();
         }
@@ -453,11 +405,9 @@
             return '';
         }
 
-        // --- ENGINS DE RENDU DES GRAPHIQUES ---
         function construireGraphiquePrincipal() {
             const ctx = document.getElementById('graphiquePrincipal').getContext('2d');
             if (chartPrincipal) chartPrincipal.destroy();
-            
             let suffixe = obtenirUniteEtAxe(typeDonneePrincipal);
 
             chartPrincipal = new Chart(ctx, {
@@ -486,9 +436,7 @@
         function construireGraphiqueArome() {
             const ctx = document.getElementById('graphiqueArome').getContext('2d');
             if (chartArome) chartArome.destroy();
-            
             let suffixe = obtenirUniteEtAxe(typeDonneeArome);
-            let rawArome = extraireData('arome', typeDonneeArome);
 
             chartArome = new Chart(ctx, {
                 type: 'line',
@@ -496,7 +444,7 @@
                     labels: donneesMeteo.labels2J,
                     datasets: [{ 
                         label: 'AROME Maille Fine', 
-                        data: rawArome, 
+                        data: extraireData('arome', typeDonneeArome), 
                         borderColor: '#fbbf24', 
                         backgroundColor: typeDonneeArome === 'pluie' ? 'rgba(56, 189, 248, 0.2)' : 'rgba(251, 191, 36, 0.05)', 
                         fill: true, 
@@ -520,7 +468,6 @@
         function construireGraphiqueSuite10Jours() {
             const ctx = document.getElementById('graphique10Jours').getContext('2d');
             if (chart10Jours) chart10Jours.destroy();
-            
             let suiteEC = baseDonneesRaw.ecmwf ? baseDonneesRaw.ecmwf.temperature_2m.slice(120, 240) : [];
 
             chart10Jours = new Chart(ctx, {
@@ -553,12 +500,10 @@
             }
         }
 
-        async function initialiserPage() {
+        function initialiserPage() {
             activerSkeletons();
-            const succes = await chercherCoordonneesVille(CONFIG_VILLE);
-            if (!succes) {
-                await chercherCoordonneesVille("Brûlain");
-            }
+            // Chargement immédiat sur le Andilly du 17 grâce aux coordonnées en dur
+            document.getElementById('nom-lieu-actif').innerText = NOM_VILLE_FIXE;
             chargerToutesLesDonnees();
         }
 
