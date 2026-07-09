@@ -197,7 +197,7 @@
         // ==========================================
         // CONFIGURATION DU SITE POUR CE REPO
         // ==========================================
-        const CONFIG_VILLE = "Andilly, 17";
+        const CONFIG_VILLE = "Andilly 17";
         // ==========================================
 
         let currentLat = "";
@@ -243,22 +243,51 @@
 
         async function chercherCoordonneesVille(nomVille) {
             try {
-                const urlGeocode = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(nomVille)}&count=1&language=fr&country_code=fr&format=json`;
+                // On nettoie la saisie
+                let recherche = nomVille.trim();
+                let filtreDepartement = "";
+
+                // Extraction magique : si on trouve 2 chiffres (ex: 17, 75, 33)
+                const matchDep = recherche.match(/\b(\d{2})\d*\b/);
+                if (matchDep) {
+                    filtreDepartement = matchDep[1]; // On stocke le département (ex: "17")
+                    recherche = recherche.replace(/\b\d+\b/, "").trim(); // On l'enlève du nom de la ville
+                }
+
+                // URL de base forcée sur la France
+                let urlGeocode = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(recherche)}&count=10&language=fr&country_code=fr&format=json`;
+                
                 const res = await fetch(urlGeocode);
                 const data = await res.json();
 
                 if (data.results && data.results.length > 0) {
-                    const ville = data.results[0];
-                    currentLat = ville.latitude.toFixed(4);
-                    currentLon = ville.longitude.toFixed(4);
-                    const regionInfo = ville.admin1 ? `, ${ville.admin1}` : '';
-                    document.getElementById('nom-lieu-actif').innerText = `${ville.name}${regionInfo}`;
+                    let villeSelectionnee = data.results[0]; // Par défaut, la première
+
+                    // Si on avait un département en filtre, on cherche dans les 10 résultats celui qui correspond
+                    if (filtreDepartement) {
+                        const correspondance = data.results.find(v => 
+                            (v.postcodes && v.postcodes.some(p => p.startsWith(filtreDepartement))) || 
+                            (v.admin2 && v.admin2.includes(filtreDepartement))
+                        );
+                        if (correspondance) {
+                            villeSelectionnee = correspondance;
+                        }
+                    }
+
+                    // Application des coordonnées trouvées
+                    currentLat = villeSelectionnee.latitude.toFixed(4);
+                    currentLon = villeSelectionnee.longitude.toFixed(4);
+                    
+                    // Affichage propre (Ex: Andilly, Nouvelle-Aquitaine)
+                    const regionInfo = villeSelectionnee.admin1 ? `, ${villeSelectionnee.admin1}` : '';
+                    document.getElementById('nom-lieu-actif').innerText = `${villeSelectionnee.name}${regionInfo}`;
                     return true;
                 }
             } catch (err) {
-                console.error("Erreur géocodage initial :", err);
+                console.error("Erreur géocodage :", err);
             }
             return false;
+        }
         }
 
         async function rechercherVille() {
